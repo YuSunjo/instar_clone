@@ -49,5 +49,13 @@ public class User {
         this.createDate = LocalDateTime.now();
     }
 
+    public void update(User user, String encodePassword) {
+        this.name = user.getName();
+        this.password = encodePassword;
+        this.bio = user.getBio();
+        this.website = user.getWebsite();
+        this.phone = user.getPhone();
+        this.gender = user.getGender();
+    }
 
 }

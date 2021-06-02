@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
         uniqueConstraints = {
                 @UniqueConstraint(
                         name="subscribe_uk",
-                        columnNames = {"from_user_id", "to_user_id"}   // 데이터 베이스 안에 있는 대로
+                        columnNames = {"fromUserId", "toUserId"}   // 데이터 베이스 안에 있는 대로
                 )
         }
 )
@@ -28,9 +28,11 @@ public class Subscribe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JoinColumn(name = "fromUserId")
     @ManyToOne
     private User fromUser;
 
+    @JoinColumn(name = "toUserId")
     @ManyToOne
     private User toUser;
 

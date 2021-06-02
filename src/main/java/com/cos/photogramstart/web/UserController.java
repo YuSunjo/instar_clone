@@ -22,7 +22,8 @@ public class UserController {
         // 밑에 두줄을 어노테이션으로 제공  - 사용 X
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        authentication.getPrincipal();
-
+        System.out.println("principalDetails = " + principalDetails.getUser().getId());
+        System.out.println("principalDetails = " + principalDetails.getUser().getEmail());
         // 이렇게 안하고 header에서 시큐리티 설정 해줌
 //        model.addAttribute("principal", principalDetails.getUser());
         return "user/update";

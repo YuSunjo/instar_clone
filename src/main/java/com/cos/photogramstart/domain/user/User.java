@@ -1,11 +1,13 @@
 package com.cos.photogramstart.domain.user;
 
 
+import com.cos.photogramstart.domain.image.Image;
 import lombok.*;
 import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -41,6 +43,10 @@ public class User {
     private String profileImageUrl;
 
     private String role;
+
+    // User 를 select할 때 해당 user id로 등록된 image 가져온다. lazy -> getImages 를 부를 때 가져온다.
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY) // 나는 연관관계의 주인이 아니다. 페이지의 컬럼 만들지 않는다.
+    private List<Image> images;
 
     private LocalDateTime createDate;
 

@@ -2,7 +2,9 @@ package com.cos.photogramstart.service;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Supplier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,6 +30,14 @@ public class UserService {
         userEntity.update(user, encodePassword);
         return userEntity;
         // 영속화된 오브젝트 수정 - 더티체킹 (업데이트 완료)
+    }
+
+    @Transactional
+    public User profile(Long userId) {
+        User userEntity = userRepository.findById(userId).orElseThrow(() -> {
+            throw new CustomException("해당 프로필 페이지는 없는 페이지 입니다.");
+        });
+        return userEntity;
     }
 
 }

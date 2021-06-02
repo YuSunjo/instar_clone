@@ -1,6 +1,7 @@
 package com.cos.photogramstart.handler;
 
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -23,7 +24,12 @@ public class ControllerExceptionHandler {
         // 1. CMRestDto -> 클라이언트에게 응답할 때는 script가 좋음
         // 2. ajax 통신에는 CMRestDto가 좋음
         // 3. android - CMRestDto가 좋음
-        return Script.back(e.getErrorMap().toString());
+//        return Script.back(e.getErrorMap().toString());
+        if (e.getErrorMap() == null) {
+            return Script.back(e.getMessage());
+        } else {
+            return Script.back(e.getErrorMap().toString());
+        }
     }
 
     @ExceptionHandler(CustomValidationApiException.class)
@@ -34,6 +40,11 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(CustomApiException.class)
     public ResponseEntity<CmRestDto<?>> apiException(CustomApiException e) {
         return new ResponseEntity<>(new CmRestDto<>(-1, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public String customException(CustomException e) {
+        return Script.back(e.getMessage());
     }
 
 }

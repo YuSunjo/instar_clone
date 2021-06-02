@@ -1,6 +1,9 @@
 package com.cos.photogramstart.web;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,10 +13,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
+    private final UserService userService;
+
     @GetMapping("/user/{id}")
-    public String profile(@PathVariable Long id) {
+    public String profile(@PathVariable Long id, Model model) {
+        User userEntity = userService.profile(id);
+        model.addAttribute("user", userEntity);
         return "user/profile";
     }
 
@@ -24,7 +32,8 @@ public class UserController {
 //        authentication.getPrincipal();
         System.out.println("principalDetails = " + principalDetails.getUser().getId());
         System.out.println("principalDetails = " + principalDetails.getUser().getEmail());
-        // 이렇게 안하고 header에서 시큐리티 설정 해줌
+        System.out.println("principalDetails = " + principalDetails.getUser().getPassword());
+        // 이렇게 안하고 header 에서 시큐리티 설정 해줌
 //        model.addAttribute("principal", principalDetails.getUser());
         return "user/update";
     }

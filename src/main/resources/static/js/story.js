@@ -45,8 +45,15 @@ function getStoryItem(image) {
         <div class="sl__item__contents">
             <div class="sl__item__contents__icon">
 
-                <button>
-                    <i class="fas fa-heart active" id="storyLikeIcon-1" onclick="toggleLike()"></i>
+                <button>`;
+
+					if(image.likeState) {
+						item +=  `<i class="fas fa-heart active" id="storyLikeIcon-${image.id}" onClick="toggleLike(${image.id})"></i>`;
+					} else{
+						item += `<i class="fas fa-heart" id="storyLikeIcon-${image.id}" onClick="toggleLike(${image.id})"></i>`;
+					}
+			item += `
+            
                 </button>
             </div>
 
@@ -84,10 +91,6 @@ function getStoryItem(image) {
 
 // (2) 스토리 스크롤 페이징하기
 $(window).scroll(() => {
-	console.log("윈도우 스크롤 높이", $(window).scrollTop());
-	console.log("문서의 높이 ",$(document).height());
-	console.log("윈도우 높이 ",$(window).height());
-
 	let checkNum = $(window).scrollTop() - ( $(document).height() - $(window).height() );
 
 	if (checkNum <1 && checkNum > -1) {
@@ -99,8 +102,8 @@ $(window).scroll(() => {
 
 
 // (3) 좋아요, 안좋아요
-function toggleLike() {
-	let likeIcon = $("#storyLikeIcon-1");
+function toggleLike(imageId) {
+	let likeIcon = $(`#storyLikeIcon-${imageId}`);
 	if (likeIcon.hasClass("far")) {
 		likeIcon.addClass("fas");
 		likeIcon.addClass("active");

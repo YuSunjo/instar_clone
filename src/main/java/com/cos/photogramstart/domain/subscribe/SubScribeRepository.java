@@ -21,4 +21,14 @@ public interface SubScribeRepository extends JpaRepository<Subscribe, Long> {
     int mSubscribeCount(Long pageUserId);
 
 
+    // 구독 여부 완성 쿼리    - 스칼라 서브 쿼리 select 안에 select 는 단일을 리턴턴
+//   select u.id, u.username, u.profileImageUrl, (select true from subscribe where fromUserId = 1 AND toUserId = u.id ) subscribe
+//    from user u inner join subscribe s on u.id = s.toUserId where s.fromUserId = 2
+
+    // 동일 유저인지 판단하는 쿼리
+//    select u.id, u.username, u.profileImageUrl,
+//    if ((select 1 from subscribe where fromUserId = 1 AND toUserId = u.id ), 1, 0) subscribe
+//            if((1 == u.id), 1, 0) equalUserState
+//    from user u inner join subscribe s on u.id = s.toUserId where s.fromUserId = 2
+
 }

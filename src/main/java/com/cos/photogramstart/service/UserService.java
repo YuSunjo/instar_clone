@@ -54,6 +54,9 @@ public class UserService {
         dto.setSubscribeState(subscribeState == 1);
         dto.setSubscribeCount(subscribeCount);
 
+        System.out.println("subscribeCount = " + subscribeCount);
+        System.out.println("subscribeState = " + subscribeState);
+        System.out.println("dto.getImageCount() = " + dto.getImageCount());
         return dto;
     }
 

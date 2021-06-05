@@ -41,6 +41,7 @@ public class UserApiController {
         } else {
             User userEntity = userService.updateUser(id, userUpdateDto.toEntity());
             principalDetails.setUser(userEntity);   // 세션 정보 변경
+            // 응답시에 userEntity 의 모든 getter 함수가 호출되고 json 으로 파싱하여 응답 - image안에 user, user안에 image 계속 돈다.
             return new CmRestDto<>(1, "회원수정완료", userEntity);
         }
 
